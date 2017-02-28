@@ -1,0 +1,29 @@
+{
+  "name": "forecast-server",
+  "version": "1.0.0",
+  "description": "Forecast API wrapper around https://forecast.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Sutikshan/forecast-server.git"
+  },
+  "keywords": [
+    "nodejs",
+    "forecast",
+    "http",
+    "api",
+    "wrapper"
+  ],
+  "author": "Anand Dubey",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Sutikshan/forecast-server/issues"
+  },
+  "homepage": "https://github.com/Sutikshan/forecast-server#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
