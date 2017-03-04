@@ -1,0 +1,19 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "indent": 2,
+    "func-names": "off",
+    "no-unused-expressions": "off"
+  },
+  "parser": "babel-eslint",
+  "globals": {
+    "describe": true,
+    "it": false,
+    "beforeEach": true,
+    "before": true,
+    "xit": false,
+    "afterEach": true,
+    "mountWithIntl": true,
+    "shallowWithIntl": true
+  }
+}
