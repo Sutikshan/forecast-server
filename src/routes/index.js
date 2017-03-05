@@ -1,5 +1,7 @@
 const express = require('express');
 const forecast = require('../lib/forecast');
+const logger = require('../lib/logger');
+
 const router = express.Router(); // eslint-disable-line
 
 router.get('/', (req, res, next) => {
@@ -16,17 +18,18 @@ router.get('/weather/:location*?/:day*?', (req, res, next) => {
   if (!location) {
     res.status(422);
     res.locals.data = { err: 'location is mandatory parameter' };
-    return next();
+    next();
+    return;
   }
 
   forecast.get(location, day)
   .then(data => {
     res.locals.data = data; // eslint-disable-line
     res.locals.view = 'index'; // eslint-disable-line
-
     next();
   }).catch(err => {
-    res.locals.data = { err: `unexpected error${err}` };
+    logger.error(err);
+    res.locals.data = { err: `unexpected error ${err}` };
     res.status(400);
     next();
   });
