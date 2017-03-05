@@ -1,0 +1,54 @@
+doctype html
+
+html
+  head
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no")
+    meta(name="apple-mobile-web-app-title", content=appName)
+
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
+    integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u',
+    crossorigin='anonymous'
+    )
+    title Weather Forecast Web App
+  body.container
+    h2 Please enter City and Day
+    form(action='/weather', method='GET')
+      div.row
+        h4.col-lg-6(for="location") City Name
+        input#location.col-lg-6(type="text" name="location" required="true" value=data.location)
+      div.row
+        h4.col-lg-6(for="day") Day
+        select.col-lg-6(id="day", name="day" value=data.day)
+          option(value="today" selected= data.day === "today") Today
+          option(value="0" selected= data.day === "0") Sunday
+          option(value="1" selected= data.day === "1") Monday
+          option(value="2" selected= data.day === "2") Tuesday
+          option(value="3" selected= data.day === "3") Wednesday
+          option(value="4" selected= data.day === "4") Thursday
+          option(value="5" selected= data.day === "5") Friday
+          option(value="6" selected= data.day === "6") Saturday
+      div.container
+        input.col-lg-12.btn.btn-lg.btn-success(type="submit" value="Get Forecast")
+        label= (data && data.err)
+    div.row
+      h4.col-lg-3 Summary
+      h4.col-lg-3= data.summary
+    div.row
+      h4.col-lg-3 Location
+      h4.col-lg-3= data.location
+    div.row
+      h4.col-lg-3 Date
+      h4.col-lg-3= data.datetime
+    div.row
+      h4.col-lg-3 Max Temprature
+      h4.col-lg-3= data.temperatureMax
+    div.row
+      h4.col-lg-3 Min Temprature
+      h4.col-lg-3= data.temperatureMin
+    div.row
+      h4.col-lg-3 Sunrise
+      h4.col-lg-3= data.sunriseTime
+    div.row
+      h4.col-lg-3 Sunset
+      h4.col-lg-3= data.sunsetTime
