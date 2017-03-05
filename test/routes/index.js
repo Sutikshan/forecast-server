@@ -32,30 +32,65 @@ describe('Index Route', () => {
 
   describe('/weather/', () => {
     it('returns html when specified format is html', function* () {
-      const result = yield agent.get('/weather/?format=html');
+      const data = { daily: { data: [{ sample: 'x' }] } };
+      sandbox.stub(forecast, 'get')
+      .returns(Promise.resolve(data));
+
+      const result = yield agent.get('/weather?format=html');
 
       expect(result.text.includes('<html>')).to.equal(true);
     });
 
-    it('returns html with error message when no location specified', function* () {
-      const result = yield agent.get('/weather/?format=html');
-
-      expect(result.text.includes('location is mandatory parameter')).to.equal(true);
-    });
-
-    it('returns json when specified format is json', function* () {
-      const result = yield agent.get('/weather/?format=json');
-
-      expect(result.body.err)
-      .to.equal('location is mandatory parameter');
-    });
-
     it('returns the json received from forecast api', function* () {
-      const data = { sample: 'x' };
+      const data = { daily: { data: [{ sample: 'x' }] } };
       const stub = sandbox.stub(forecast, 'get')
       .withArgs('Sydney', 'today')
       .returns(Promise.resolve(data));
       const result = yield agent.get('/weather/Sydney?format=json');
+
+      expect(stub.calledOnce).to.equal(true);
+      expect(result.body.sample).to.equal('x');
+    });
+
+    it('/weather?location=Perth&format=json returns', function* () {
+      const data = { daily: { data: [{ sample: 'x', location: 'Perth' }] } };
+      const stub = sandbox.stub(forecast, 'get')
+      .withArgs('Perth', 'today')
+      .returns(Promise.resolve(data));
+      const result = yield agent.get('/weather?location=Perth&format=json');
+
+      expect(stub.calledOnce).to.equal(true);
+      expect(result.body.sample).to.equal('x');
+    });
+
+    it('/weather?location=Perth&day=3&format=json returns', function* () {
+      const data = { daily: { data: [{ sample: 'x', location: 'Perth' }] } };
+      const stub = sandbox.stub(forecast, 'get')
+      .withArgs('Perth', '3')
+      .returns(Promise.resolve(data));
+      const result = yield agent.get('/weather?location=Perth&day=3&format=json');
+
+      expect(stub.calledOnce).to.equal(true);
+      expect(result.body.sample).to.equal('x');
+    });
+
+    it('/weather/Perth/3?format=json returns', function* () {
+      const data = { daily: { data: [{ sample: 'x', location: 'Perth' }] } };
+      const stub = sandbox.stub(forecast, 'get')
+      .withArgs('Perth', '3')
+      .returns(Promise.resolve(data));
+      const result = yield agent.get('/weather/Perth/3?format=json');
+
+      expect(stub.calledOnce).to.equal(true);
+      expect(result.body.sample).to.equal('x');
+    });
+
+    it('/weather/Perth?format=json returns', function* () {
+      const data = { daily: { data: [{ sample: 'x', location: 'Perth' }] } };
+      const stub = sandbox.stub(forecast, 'get')
+      .withArgs('Perth', 'today')
+      .returns(Promise.resolve(data));
+      const result = yield agent.get('/weather/Perth?format=json');
 
       expect(stub.calledOnce).to.equal(true);
       expect(result.body.sample).to.equal('x');
