@@ -1,5 +1,5 @@
 # Forecast Server
-Server Side NodeJS wrapper for Forecast API
+Server Side NodeJS wrapper for Forecast API written with ES6 using nodejs - 6.9.2
 
 # To run the app on dev environment
 - create .env.example file
