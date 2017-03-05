@@ -5,7 +5,7 @@ html
     h1 Please enter location and select weekday
     div
       form(action='/weather', method='GET')
-        label(for="location") Please enter name of city
+        label(for="location") City Name
         input#location(type="text" name="location")
         input(type="submit" value="Get Weather Forecast")
-        label= data && data.daily.summary
+        label= (data && data.daily && data.daily.summary) || (data && data.err)

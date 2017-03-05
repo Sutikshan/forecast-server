@@ -6,7 +6,7 @@ const reqFormatter = require('./middlewares/request_formatter');
 const resFormatter = require('./middlewares/response_formatter');
 
 const app = express();
-const PORT = process.env.PORT || 6164;
+const PORT = process.env.PORT || 6169;
 const {
   version,
 } = require('../package.json');

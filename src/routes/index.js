@@ -3,6 +3,9 @@ const forecast = require('../lib/forecast');
 const router = express.Router(); // eslint-disable-line
 
 router.get('/', (req, res, next) => {
+  res.locals.data = { // eslint-disable-line
+    message: 'Weather forecast app, please provide /weather/:CityName/:day',
+  };
   next();
 });
 
@@ -11,8 +14,9 @@ router.get('/weather/:location*?/:day*?', (req, res, next) => {
   const day = req.query.day || req.params.day || 'today';
 
   if (!location) {
-    res.status(422).send({ msg: 'location is mandatory parameter' });
-    return;
+    res.status(422);
+    res.locals.data = { err: 'location is mandatory parameter' };
+    return next();
   }
 
   forecast.get(location, day)
@@ -22,7 +26,9 @@ router.get('/weather/:location*?/:day*?', (req, res, next) => {
 
     next();
   }).catch(err => {
-    res.status(400).send({ msg: `unexpected error${err}` });
+    res.locals.data = { err: `unexpected error${err}` };
+    res.status(400);
+    next();
   });
 });
 

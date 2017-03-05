@@ -1,4 +1,4 @@
-const formatter = (req, res, next) => {
+const formatter = (req, res) => {
   res.format({
     'text/plain': () => {
       res.send(JSON.stringify(res.locals.data));
@@ -17,7 +17,7 @@ const formatter = (req, res, next) => {
       res.status(406).send(`${req.headers.accept} Not Acceptable`);
     },
   });
-  next();
+  res.end();
 };
 
 module.exports = formatter;
