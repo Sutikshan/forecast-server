@@ -1,5 +1,6 @@
 const https = require('https');
 const logger = require('./logger');
+
 const get = (uri) => new Promise((resolve, reject) => {
   https.get(
   uri,

@@ -1,6 +1,7 @@
 const express = require('express');
 const forecast = require('../lib/forecast');
 const logger = require('../lib/logger');
+const dailyViewModel = require('../mapper/dailyViewModel');
 
 const router = express.Router(); // eslint-disable-line
 /* eslint no-param-reassign: 0 */
@@ -13,21 +14,9 @@ router.get('/', (req, res, next) => {
 });
 
 const getForecast = (location, day, req, res, next) => {
-  if (!location) {
-    res.status(422);
-    res.locals.data = { err: 'location is mandatory parameter' };
-    next();
-    return;
-  }
-
   forecast.get(location, day)
   .then(data => {
-    const daily = data.daily.data[0];
-    daily.location = location;
-    daily.day = day;
-    daily.datetime = new Date(daily.time * 1000);
-
-    res.locals.data = daily;
+    res.locals.data = dailyViewModel.get(data, location, day);
     res.locals.view = 'index';
     next();
   }).catch(err => {

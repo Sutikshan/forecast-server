@@ -11,7 +11,7 @@ const formatter = (req, res, next) => {
       break;
     default:
       req.headers.accept = 'text/html';  // eslint-disable-line
-
+      break;
   }
   next();
 };

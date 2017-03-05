@@ -11,11 +11,6 @@ const formatter = (req, res) => {
     'application/json': () => {
       res.send(res.locals.data);
     },
-
-    default: () => {
-      // log the request and respond with 406
-      res.status(406).send(`${req.headers.accept} Not Acceptable`);
-    },
   });
   res.end();
 };

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node -r dotenv/config ./src/index.js dotenv_config_path=./.env.example",
     "start": "node -r dotenv/config ./src/index.js dotenv_config_path=./.env",
-    "test": "./node_modules/.bin/_mocha -R spec "
+    "test": "./node_modules/.bin/_mocha -R spec ",
+    "coverage": "./node_modules/.bin/nyc npm test"
   },
   "repository": {
     "type": "git",
